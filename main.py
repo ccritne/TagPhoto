@@ -55,12 +55,13 @@ class PhotoViewer:
     def show_image(self):
         # Display the current image
         file_path = self.images[self.current_index]["path"]
+        name = os.path.basename(file_path)
         image = Image.open(file_path)
         image = image.resize((500, 500))  # Resize for display
         self.photo = ImageTk.PhotoImage(image)
 
         self.label.config(image=self.photo)
-        self.root.title(f"Photo Viewer - {file_path}")
+        self.root.title(f"Photo Viewer - {name}")
 
     def show_next_image(self, event=None):
         self.images[self.current_index]["tags"] = self.text_entry.get().split(" ")
