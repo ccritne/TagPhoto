@@ -1,28 +1,9 @@
-import tkinter as tk
 from PIL import Image, ImageTk, UnidentifiedImageError
+
 import glob
-from tkinter import filedialog
-import shutil
 import os
-
-class GetFolder:
-    def open_directory(self):
-        dir_path  = filedialog.askdirectory()
-
-        self.root.destroy()
-
-        root_viewer_tk = tk.Tk()
-
-        PhotoViewer(root_viewer_tk, dir_path, "outputs")
-    
-    def __init__(self, root):
-        self.root = root
-
-        self.label = tk.Label(root)
-        self.label.pack()
-
-        self.open_button = tk.Button(root, text="Load folder", command=self.open_directory)
-        self.open_button.pack()
+import shutil
+import tkinter as tk
 
 class PhotoViewer:
     def __init__(self, root, dir_path, output):
@@ -39,7 +20,7 @@ class PhotoViewer:
             print("No images found!")
             self.root.destroy()
             return
-        
+
         self.label = tk.Label(root)
         self.label.pack()
 
@@ -76,18 +57,18 @@ class PhotoViewer:
                 os.makedirs(output_dir)
 
             for image in self.images:
-                
+
                 for tag in image["tags"]:
                     suboutput_dir = os.path.join(output_dir, tag)
 
                     if not os.path.exists(suboutput_dir):
                         os.makedirs(suboutput_dir)
-                    
+
                     shutil.copy(image["path"], suboutput_dir)
 
             self.root.quit()  # Quit after last image
             return
-        
+
         self.show_image()
 
     def get_valid_images(self, path):
@@ -108,12 +89,3 @@ class PhotoViewer:
                 print(f"Skipping invalid image: {file}")
 
         return valid_images  # Sort the list alphabetically
-
-if __name__ == "__main__":
-
-
-    root = tk.Tk()
-
-    file = GetFolder(root)
-    
-    root.mainloop()
