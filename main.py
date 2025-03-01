@@ -5,15 +5,15 @@ from tkinter import filedialog
 import shutil
 import os
 
-class GetFile:
+class GetFolder:
     def open_directory(self):
-        file_path  = filedialog.askdirectory()
+        dir_path  = filedialog.askdirectory()
 
         self.root.destroy()
 
         root_viewer_tk = tk.Tk()
 
-        PhotoViewer(root_viewer_tk, file_path, "outputs")
+        PhotoViewer(root_viewer_tk, dir_path, "outputs")
     
     def __init__(self, root):
         self.root = root
@@ -21,18 +21,18 @@ class GetFile:
         self.label = tk.Label(root)
         self.label.pack()
 
-        self.open_button = tk.Button(root, text="Load file", command=self.open_directory)
+        self.open_button = tk.Button(root, text="Load folder", command=self.open_directory)
         self.open_button.pack()
 
 class PhotoViewer:
-    def __init__(self, root, path, output):
+    def __init__(self, root, dir_path, output):
         self.root = root
         self.root.title("Photo Viewer")
 
-        self.name_project = os.path.basename(path)
+        self.name_project = os.path.basename(dir_path)
         self.output_path = output
 
-        self.images = self.get_valid_images(path)
+        self.images = self.get_valid_images(dir_path)
         self.current_index = 0
 
         if not self.images:
@@ -113,6 +113,6 @@ if __name__ == "__main__":
 
     root = tk.Tk()
 
-    file = GetFile(root)
+    file = GetFolder(root)
     
     root.mainloop()
